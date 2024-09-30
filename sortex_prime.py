@@ -24,23 +24,24 @@ def organize_files(dir):
     for file in os.listdir(dir):
         filepath = os.path.join(dir, file)
         
+        if not os.path.exists(file):
+            continue
         modified_date = datetime.datetime.fromtimestamp(os.path.getmtime(filepath))
         date_formatted = modified_date.strftime('%B-%Y')
-        
+            
         folder_path = os.path.join(dir, date_formatted)
-        try:
-            os.makedirs(folder_path, exist_ok=True)
-            if not file == os.path.basename(__file__):
-                shutil.move(file, folder_path)
-            print(f'Sucesss')
-        except Exception as e:
-            print(f'Error --> {e}')
-            
-            
+        os.makedirs(folder_path, exist_ok=True)
+        
+        if not file == os.path.basename(__file__):
+            shutil.move(file, folder_path)
+            # print(f'Sucesss') {for debugging prupouses- uncomment}
+
+        # else:
+        #     os.mkdirs(filepath)
+   
         organize_by_extension(folder_path)
         
 
 if __name__ == "__main__":
-    current_dir = os.path.dirname(os.path.realpath(__file__))    
-    organize_files(current_dir)
+    organize_files(os.getcwd())
    
