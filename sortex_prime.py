@@ -2,6 +2,7 @@ import os
 import datetime
 import shutil
 import glob
+import extractor2
 
 
 def organize_by_extension(dir):
@@ -22,11 +23,11 @@ def organize_by_extension(dir):
 def organize_files(dir):
     for file in os.listdir(dir):
         filepath = os.path.join(dir, file)
+        
         modified_date = datetime.datetime.fromtimestamp(os.path.getmtime(filepath))
         date_formatted = modified_date.strftime('%B-%Y')
         
         folder_path = os.path.join(dir, date_formatted)
-        
         try:
             os.makedirs(folder_path, exist_ok=True)
             if not file == os.path.basename(__file__):
@@ -40,5 +41,6 @@ def organize_files(dir):
         
 
 if __name__ == "__main__":
-    organize_files(os.path.dirname(os.path.realpath(__file__)))
+    current_dir = os.path.dirname(os.path.realpath(__file__))    
+    organize_files(current_dir)
    
